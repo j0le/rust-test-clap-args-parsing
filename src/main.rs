@@ -1,4 +1,5 @@
 use clap::Parser;
+use std::os::windows::process::CommandExt;
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
@@ -32,6 +33,11 @@ fn main() {
 
             std::process::Command::new(prog_name)
                 .arg("--name=Dwayne \"The Rock\" Johnson")
+                .spawn()
+                .expect("fail");
+
+            std::process::Command::new(prog_name)
+                .raw_arg("  --name=\"Dwayne \"\"The Rock\"\" Johnson\" --count 4   ")
                 .spawn()
                 .expect("fail");
         }
