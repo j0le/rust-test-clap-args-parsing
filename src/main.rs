@@ -21,11 +21,20 @@ fn main() {
     let args = Args::parse();
 
     for _ in 0..args.count {
-        println!("Hello {}!", args.name)
+        println!("Hello {}!", args.name);
     }
 
     if args.callself {
-        println!("TODO: call self")
+        let args_old: Vec<String> = std::env::args().collect();
+        if args_old.len() >= 1 {
+            let prog_name = &args_old[0];
+            println!("call self \"{}\"", prog_name);
+
+            std::process::Command::new(prog_name)
+                .arg("--name=Dwayne \"The Rock\" Johnson")
+                .spawn()
+                .expect("fail");
+        }
     }
 }
 
